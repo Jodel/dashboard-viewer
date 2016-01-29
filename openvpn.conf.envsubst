@@ -1,0 +1,12 @@
+client
+nobind
+remote-random
+remote $REMOTE_HOST $REMOTE_PORT
+proto tcp
+mute 5
+dev tun
+<ca>
+$CERT
+</ca>
+
+auth-user-pass /etc/openvpn.credentials

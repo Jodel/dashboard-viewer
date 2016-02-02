@@ -37,14 +37,14 @@ echo "Waiting for X to be ready"
 while ! [ -e "/tmp/.X0-lock" ]; do sleep 1; done
 
 export DISPLAY=:0
+feh --bg-scale /etc/wallpaper.png
 xset -dpms
 xset s off
 xset s noblank
 
 matchbox-window-manager -use_cursor no &
 
-mkdir /tmp/.config
-xte 'sleep 10' 'key F11' &
-epiphany-browser -a --profile /tmp/.config --display=:0 ${URL:-http://jodel-app.com}
+# xte 'sleep 10' 'key F11' &
+iceweasel ${URL:-http://jodel-app.com}
 
 sleep infinity

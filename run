@@ -34,10 +34,10 @@ Xorg &
 X_PID=$!
 
 echo "Waiting for X to be ready"
-while ! [ -e "/tmp/.X0-lock" ]; do sleep 1; done
-
 export DISPLAY=:0
-feh --bg-scale /etc/wallpaper.png
+
+# Setting wallpaper and polling X in one!
+while ! feh --bg-scale /etc/wallpaper.png; do sleep 1; done
 xset -dpms
 xset s off
 xset s noblank

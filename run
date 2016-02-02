@@ -17,6 +17,7 @@ dev tun
 <ca>
 $( echo -e "$CERT" )
 </ca>
+auth-user-pass /etc/openvpn.credentials
 EOF
   ( umask 0077; echo -e "${VPN_USER}\n${VPN_PASS}" > /etc/openvpn.credentials )
   openvpn --config /etc/openvpn.conf

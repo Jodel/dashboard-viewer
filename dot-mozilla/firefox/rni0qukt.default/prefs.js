@@ -51,3 +51,4 @@ user_pref("signon.importedFromSqlite", true);
 user_pref("storage.vacuum.last.index", 0);
 user_pref("toolkit.startup.last_success", 1454431378);
 user_pref("toolkit.telemetry.previousBuildID", "20151216080806");
+user_pref("dom.max_script_run_time", 0);

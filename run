@@ -1,6 +1,7 @@
 #!/bin/bash
 # set -euo pipefail
 set -x
+URL=${URL:-http://jodel-app.com}
 
 export PASS=${PASS:=root}
 echo "root:$PASS" | chpasswd
@@ -38,13 +39,14 @@ export DISPLAY=:0
 
 # Setting wallpaper and polling X in one!
 while ! feh --bg-scale /etc/wallpaper.png; do sleep 1; done
+matchbox-window-manager -use_cursor no &
+
+while ! curl -sf -o /dev/null "$URL"; do sleep 1; done
+
 xset -dpms
 xset s off
 xset s noblank
 
-matchbox-window-manager -use_cursor no &
-
-# xte 'sleep 10' 'key F11' &
-iceweasel ${URL:-http://jodel-app.com}
+iceweasel "$URL"
 
 sleep infinity

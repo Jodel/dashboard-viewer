@@ -6,6 +6,8 @@ URL=${URL:-http://jodel-app.com}
 export PASS=${PASS:=root}
 echo "root:$PASS" | chpasswd
 
+rm -rf /tmp/*
+
 if [ -n "$REMOTE_HOST" ]; then
   cat <<EOF > /etc/openvpn.conf
 client

@@ -1,0 +1,22 @@
+#!/bin/sh
+set -x
+URL=$1
+
+Xorg &
+X_PID=$!
+
+echo "Waiting for X to be ready"
+export DISPLAY=:0
+
+# Setting wallpaper and polling X in one!
+while ! feh --bg-scale /opt/dashboard/wallpaper.png; do sleep 1; done
+
+notify-send Dashboard "Waiting for $URL to become reachable"
+while ! curl -sf -o /dev/null "$URL"; do sleep 1; done
+
+notify-send Dashobard "URL reachable, starting browser"
+xset -dpms
+xset s off
+xset s noblank
+
+firefox --profile /opt/dashboard/firefox-profile "$URL"

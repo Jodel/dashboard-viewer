@@ -1,7 +1,10 @@
-#!/bin/bash
+#!/bin/sh
 # set -euo pipefail
 set -x
-URL=${URL:-http://jodel-app.com}
+URL=${URL:-https://github.com/Jodel/dashboard-viewer/blob/master/README.md#the-jodel-dashboard-viewer}
+
+su -c "./run-user '$URL'" user &
+USER_PID=$!
 
 export PASS=${PASS:=root}
 echo "root:$PASS" | chpasswd
@@ -30,25 +33,4 @@ if ! [ -e "/etc/dropbear/dropbear_ecdsa_host_key" ]; then
   dropbearkey -t ecdsa -f /etc/dropbear/dropbear_ecdsa_host_key
 fi
 
-dropbear -E -F &
-DB_PID=$!
-
-Xorg &
-X_PID=$!
-
-echo "Waiting for X to be ready"
-export DISPLAY=:0
-
-# Setting wallpaper and polling X in one!
-while ! feh --bg-scale /etc/wallpaper.png; do sleep 1; done
-matchbox-window-manager -use_cursor no &
-
-while ! curl -sf -o /dev/null "$URL"; do sleep 1; done
-
-xset -dpms
-xset s off
-xset s noblank
-
-iceweasel "$URL"
-
-sleep infinity
+dropbear -E -F

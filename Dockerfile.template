@@ -1,15 +1,11 @@
-FROM resin/%%RESIN_MACHINE_NAME%%-python
+FROM fish/alpine-rpi
 
-ENV DEBIAN_FRONTEND noninteractive
+RUN echo "http://dl-3.alpinelinux.org/alpine/latest-stable/community" \
+    >> /etc/apk/repositories \
+    && apk add --update curl dropbear openvpn xorg-server \
+       xf86-video-fbdev feh firefox xset \
+    && adduser -D user
 
-RUN apt-get update && apt-get install -y \
-  iceweasel dropbear xserver-xorg-core xserver-xorg-video-fbdev x11-xserver-utils \
-  libgl1-mesa-dri xserver-xorg-video-modesetting xserver-xorg-video-vesa \
-  matchbox-window-manager openvpn xautomation feh \
-  && apt-get clean && rm -rf /var/lib/apt/lists/*
-
-ADD run /bin/run
-ADD jodel-wallpaper.png /etc/wallpaper.png
-ADD dot-mozilla /root/.mozilla
-
-ENTRYPOINT [ "/bin/run" ]
+COPY  . /opt/dashboard
+WORKDIR /opt/dashboard
+ENTRYPOINT [ "/opt/dashboard/run" ]

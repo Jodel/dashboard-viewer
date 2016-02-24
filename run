@@ -3,8 +3,10 @@
 set -x
 URL=${URL:-https://github.com/Jodel/dashboard-viewer/blob/master/README.md#the-jodel-dashboard-viewer}
 
-su -c "./run-user '$URL'" user &
-USER_PID=$!
+dbus-daemon --system --fork
+
+# su -s /bin/sh -c "./run-user '$URL'" user &
+# USER_PID=$!
 
 export PASS=${PASS:=root}
 echo "root:$PASS" | chpasswd

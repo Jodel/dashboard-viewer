@@ -1,9 +1,9 @@
-FROM fish/alpine-rpi
+FROM fish/alpine-armhf:edge
 
 RUN echo "@community http://dl-3.alpinelinux.org/alpine/latest-stable/community" \
     >> /etc/apk/repositories \
-    && apk add --update curl dropbear openvpn xorg-server \
-       xf86-video-fbdev feh firefox@community xset \
+    && apk add --update curl dropbear openvpn xorg-server dbus \
+       xf86-video-fbdev mesa-dri-swrast feh firefox@community xset libnotify \
     && adduser -D user \
     && ln -s /data/dropbear /etc/dropbear
 

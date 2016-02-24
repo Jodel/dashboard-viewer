@@ -1,10 +1,11 @@
 FROM fish/alpine-rpi
 
-RUN echo "http://dl-3.alpinelinux.org/alpine/latest-stable/community" \
+RUN echo "@community http://dl-3.alpinelinux.org/alpine/latest-stable/community" \
     >> /etc/apk/repositories \
     && apk add --update curl dropbear openvpn xorg-server \
-       xf86-video-fbdev feh firefox xset \
-    && adduser -D user
+       xf86-video-fbdev feh firefox@community xset \
+    && adduser -D user \
+    && ln -s /data/dropbear /etc/dropbear
 
 COPY  . /opt/dashboard
 WORKDIR /opt/dashboard
